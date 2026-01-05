@@ -1,0 +1,80 @@
+快应用短剧信息查询开放接口接入文档
+
+一、请求示例
+接口地址：https://qappcenter.vivo.com.cn/playlet-openapi/query
+请求方式：GET
+1、请求参数：
+
+字段名	字段类型	是否必填	含义	示例
+fcPlayletId	String	是	短剧id	FUNSHION9538019
+supportH265	Boolean	否	是否支持H265，true优先返回H265格式的链接	true
+accessKeyId	String	是	vivo分配的唯一标识	test
+timestamp	Long	是	时间戳，有效期5分钟	1754884931955
+sign	String	是	签名	1d97a0c85f6ed9193326fb042600c0fb7713abc66898720766c8c5f444e2c9fd
+请求示例：https://qappcenter.vivo.com.cn/playlet-openapi/query?accessKeyId=test&timestamp=1754884931955&sign=1d97a0c85f6ed9193326fb042600c0fb7713abc66898720766c8c5f444e2c9fd&fcPlayletId=FUNSHION9538019&supportH265=true
+2、响应参数
+
+字段名	字段类型	含义	示例
+code	Integer	响应码	成功：2000，失败：-1
+data	Object	响应数据	请参考响应示例
+status	Integer	短剧状态（1-上架，2-下架；已下架短剧除短剧状态外没有其他信息）	
+name	String	短剧名称	
+introduction	String	短剧简介	
+coverWap	String	短剧封面链接	
+fcCategoryList	List<String>	短剧分类	
+episodeDetails	List<Object>	短剧剧集信息	
+-order	Integer	剧集顺序	
+-title	String	剧集标题	
+-url	String	剧集链接（该链接会过期，如要使用请保存至本地后再进行使用）	
+-episodeId	String	剧集id	
+-status	Integer	剧集状态（1-上架，2-下架；已下架剧集只会返回剧集id）	
+
+响应示例：
+  1  {
+  2      "code": 2000,
+  3      "data": {
+  4          "name": "测试短剧名称",
+  5          "introduction": "测试短剧简介",
+  6          "coverWap": "https://测试短剧封面.png",
+  7          "status": 1,
+  8          "fcCategoryList": [
+  9              "悬疑",
+ 10              "脑洞"
+ 11          ],
+ 12          "episodeDetails": [
+ 13              {
+ 14                  "episodeId": "XXXXEPISODEID01",
+ 15                  "status": 1,
+ 16                  "order": 1,
+ 17                  "title": "测试短剧剧集 第1集",
+ 18                  "url": "https://测试短剧剧集第1集链接"
+ 19              },
+ 20              {
+ 21                  "episodeId": "XXXXEPISODEID03",
+ 22                  "status": 1,
+ 23                  "order": 3,
+ 24                  "title": "测试短剧剧集 第3集",
+ 25                  "url": "https://测试短剧剧集第3集链接"
+ 26              }
+ 27          ]
+ 28      }
+ 29  }
+二、签名方式
+将所有参数以key=value的形式按参数名的字母升序排列，以&拼接，得到正确的字串应如下所示：
+示例1、提交supportH265参数：accessKeyId=test&accessKeySecret=Pr7K6pHZLEvs74ywUrggQ6lxiHZJptyp&fcPlayletId=FUNSHION9538019&supportH265=true&timestamp=1754884931955
+示例2、不提交supportH256参数：accessKeyId=test&accessKeySecret=Pr7K6pHZLEvs74ywUrggQ6lxiHZJptyp&fcPlayletId=FUNSHION9538019&timestamp=1754884931955
+再以accessKeySecret为密钥，使用SHA256算法签名对上述字串进行哈希运算，并将结果转换为16进制字符串。其中，accessKeyId及accessKeySecret在对接时由vivo分配。
+以Java代码为例：
+  1  Mac mac = Mac.getInstance("HmacSHA256");
+  2  SecretKeySpec secretKeySpec = new SecretKeySpec("yourSecret".getBytes(StandardCharsets.UTF_8), "HmacSHA256");
+  3  mac.init(secretKeySpec);
+  4  String text = "yourText";
+  5  byte[] hashBytes = mac.doFinal(text.getBytes(StandardCharsets.UTF_8));
+  6  StringBuilder sb = new StringBuilder();
+  7  for (byte b : hashBytes) {
+  8      sb.append(String.format("%02x", b));
+  9  }
+ 10  return sb.toString;
+
+以上述示例1的签名串加密得到的签名为：1d97a0c85f6ed9193326fb042600c0fb7713abc66898720766c8c5f444e2c9fd
+以上述示例2的签名串加密得到的签名为：e55f62f372514d43df2a2a530b4c8da7ccee721d3e190b538299e15e03b51eac

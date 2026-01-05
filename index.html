@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vivo短剧素材库查询工具</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- 登录界面 -->
+    <div id="loginModal" class="login-modal">
+        <div class="login-box">
+            <div class="login-header">
+                <h2>🔒 访问验证</h2>
+                <p>请输入访问密码</p>
+            </div>
+            <div class="login-form">
+                <input 
+                    type="password" 
+                    id="passwordInput" 
+                    placeholder="请输入访问密码"
+                    autocomplete="off"
+                    autofocus
+                >
+                <div id="loginError" class="login-error hidden"></div>
+                <button id="loginBtn" class="btn-login">验证</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="container hidden" id="mainContainer">
+        <header class="header">
+            <h1>vivo短剧素材库查询工具</h1>
+            <p class="subtitle">快速查询短剧信息，获取封面、剧集等素材</p>
+            <a href="https://g1jwoeqxw78.feishu.cn/wiki/MJIWwsFEkiYitQkNE1lcDHGBnng" target="_blank" class="query-link">
+                <span>📋</span>
+                <span>短剧快应用素材-短剧ID查询表</span>
+            </a>
+        </header>
+
+        <div class="search-section">
+            <div class="search-box">
+                <label for="playletId">短剧ID：</label>
+                <input 
+                    type="text" 
+                    id="playletId" 
+                    placeholder="请输入短剧ID，例如：FUNSHION9538019"
+                    autocomplete="off"
+                >
+                <div class="checkbox-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="supportH265" checked>
+                        <span>优先H265格式</span>
+                    </label>
+                </div>
+                <button id="searchBtn" class="btn-primary">查询短剧</button>
+            </div>
+        </div>
+
+        <div id="loading" class="loading hidden">
+            <div class="spinner"></div>
+            <p>正在查询中...</p>
+        </div>
+
+        <div id="error" class="error hidden"></div>
+
+        <div id="result" class="result hidden">
+            <div class="playlet-info">
+                <div class="cover-section">
+                    <img id="coverImg" src="" alt="短剧封面" class="cover-image">
+                    <div class="cover-actions">
+                        <button class="btn-secondary copy-cover-btn">复制封面链接</button>
+                        <button class="btn-secondary download-cover-btn">下载封面</button>
+                        <a id="coverUrl" href="" target="_blank" class="btn-secondary">查看大图</a>
+                    </div>
+                </div>
+                <div class="info-section">
+                    <h2 id="playletName"></h2>
+                    <div class="status-badge" id="statusBadge"></div>
+                    <div class="categories" id="categories"></div>
+                    <div class="introduction">
+                        <div class="introduction-header">
+                            <h3>简介</h3>
+                            <button class="btn-copy-intro" title="复制简介">
+                                <span>📋</span>
+                                <span>复制简介</span>
+                            </button>
+                        </div>
+                        <p id="introduction"></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="episodes-section">
+                <div class="episodes-header">
+                    <h3>剧集列表 <span id="episodeCount"></span></h3>
+                    <div class="batch-actions hidden" id="batchActions">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="selectAll">
+                            <span>全选</span>
+                        </label>
+                        <button class="btn-secondary batch-download-btn" id="batchDownloadBtn">
+                            <span>批量下载</span>
+                            <span class="selected-count" id="selectedCount">(0)</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="episodes-grid" id="episodesGrid"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JSZip库用于打包下载 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,31 @@
+{
+  "name": "vivo-playlet-tool",
+  "version": "1.1.0",
+  "description": "vivo 短剧素材库查询工具",
+  "type": "module",
+  "main": "main.cjs",
+  "scripts": {
+    "start": "node server.js",
+    "electron": "electron .",
+    "build:win": "electron-packager . vivo短剧素材库工具 --platform=win32 --arch=x64 --out=dist --overwrite --ignore=\"^/dist$\" --ignore=\"^/\\.git\" --ignore=\"\\.env\\.example$\" --ignore=\"README\\.md$\" --ignore=\"\\.gitignore$\" --ignore=\"^/server\\.js$\" --ignore=\"^/server\\.cjs$\"",
+    "setup": "npm install"
+  },
+  "keywords": ["vivo", "短剧", "素材库"],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^4.21.2",
+    "express-rate-limit": "^8.2.1",
+    "helmet": "^8.1.0",
+    "node-fetch": "^3.3.2"
+  },
+  "devDependencies": {
+    "electron": "^28.3.3",
+    "electron-packager": "^17.1.2"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}
