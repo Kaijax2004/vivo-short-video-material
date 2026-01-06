@@ -78,16 +78,4 @@ vivo-playlet-tool/
 - 🛠️ 改进错误处理
 - 🎨 改进UI交互体验
 
-## 📄 许可证
 
-MIT License
-"# vivo-short-video-material" 
-"# vivo-short-video-material" 
-"# vivo-short-video-material" 
-"# vivo-short-video-material" 
-"# vivo-short-video-material" 
-"# vivo-short-video-material" 
-"# vivo-short-video-material" 
-"# vivo-short-video-material" 
-"# vivo-short-video-material" 
-"# vivo-short-video-material" 
